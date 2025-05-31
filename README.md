@@ -1,108 +1,114 @@
 # EKS
 Understanding EKS
 
-# 🧠 Understanding Your AWS EKS Cluster Setup
 
-This guide provides essential kubectl, aws, and eksctl commands to help you inspect and understand the configuration of your Amazon EKS cluster.
+markdown
+Copy
+Edit
+# 🔍 Explore & Understand Your AWS EKS Cluster
 
-# 📌 1. Cluster Overview
+This repository provides a quick reference to inspect and understand the components and setup of your **Amazon EKS cluster** using `kubectl`, `aws`, and `eksctl`.
+
+---
+
+## 📌 1. Cluster Overview
 
 ```bash
 kubectl cluster-info
 kubectl version --short
-kubectl get nodes -o wide```
+kubectl get nodes -o wide
+🔸 View API server URL, K8s version, node instance types, and availability zones.
 
-- View API server details
-- Confirm node health, versions, and AZ placement
-
-📌 2. List Namespaces and All Resources
+📌 2. Namespaces and Workloads
 bash
 Copy
 Edit
 kubectl get namespaces
 kubectl get all --all-namespaces
-Get a holistic view of all workloads running in your cluster
+🔸 Lists workloads (pods, deployments, services, etc.) across all namespaces.
 
-📌 3. EKS Cluster Details (AWS CLI)
+📌 3. EKS Cluster (AWS CLI)
 bash
 Copy
 Edit
 aws eks list-clusters
 aws eks describe-cluster --name <your-cluster-name> --region <region> --output table
-Review control plane settings, endpoint access, logging, and cluster version
+🔸 Displays control plane config, endpoint access, IAM roles, and logging options.
 
-📌 4. IAM & Access Control
+📌 4. IAM & Access Mapping (IRSA / aws-auth)
 bash
 Copy
 Edit
 kubectl describe configmap aws-auth -n kube-system
 kubectl get serviceaccounts --all-namespaces
-Check which IAM roles are mapped to Kubernetes access
+🔸 Check IAM to Kubernetes role bindings and service account-based access.
 
-Inspect use of IRSA (IAM Roles for Service Accounts)
-
-📌 5. Ingress & Services
+📌 5. Networking: Ingress & Services
 bash
 Copy
 Edit
 kubectl get ingress --all-namespaces
 kubectl get svc --all-namespaces
-See how apps are exposed: LoadBalancer, NodePort, or Ingress Controller
+🔸 View ingress rules and how services are exposed (LoadBalancer, NodePort, etc.).
 
-📌 6. Storage Setup
+📌 6. Persistent Storage
 bash
 Copy
 Edit
-kubectl get sc
 kubectl get pvc --all-namespaces
-Inspect StorageClasses (e.g., EBS, EFS) and usage by workloads
+kubectl get sc
+🔸 View PersistentVolumeClaims and available StorageClasses (EBS, EFS, etc.).
 
-📌 7. System Components (kube-system)
+📌 7. System-Level Components
 bash
 Copy
 Edit
 kubectl get pods -n kube-system
-Monitor cluster-level components: CoreDNS, kube-proxy, cni, aws-node
+🔸 Validate components like CoreDNS, kube-proxy, aws-node, and CNI plugins.
 
 📌 8. Custom Resources
 bash
 Copy
 Edit
 kubectl get crds
-Validate CRDs installed by tools like Argo CD, cert-manager, ALB Controller, etc.
+🔸 Inspect Custom Resource Definitions installed by tools like:
 
-📌 9. Helm (if used)
+Argo CD
+
+AWS Load Balancer Controller
+
+cert-manager
+
+📌 9. Helm Charts (Optional)
 bash
 Copy
 Edit
 helm list -A
-List all Helm-deployed resources across namespaces
+🔸 List Helm releases across all namespaces (if Helm is used).
 
-📌 10. Argo CD (Optional: GitOps)
+📌 10. Argo CD GitOps (Optional)
 bash
 Copy
 Edit
 kubectl get applications -n argocd
-View apps synced by Argo CD (if GitOps is configured)
+🔸 Shows GitOps-synced applications using Argo CD.
 
 📌 Bonus: IAM Identity Mappings (eksctl)
 bash
 Copy
 Edit
 eksctl get iamidentitymapping --cluster <cluster-name> --region <region>
-List IAM users/roles with access to your cluster via aws-auth
+🔸 Displays all IAM users/roles mapped via aws-auth for cluster access.
 
-📂 Pro Tip: Export All Resources to YAML
+🧰 Dump All Cluster Resources (Backup or Audit)
 bash
 Copy
 Edit
-kubectl get all --all-namespaces -o yaml > eks-dump.yaml
-Use this for backup, auditing, or documentation.
+kubectl get all --all-namespaces -o yaml > eks-cluster-backup.yaml
+📚 References
+📘 Amazon EKS Official Docs
 
-📎 Related
-Amazon EKS Documentation
+🛠️ eksctl GitHub
 
-eksctl GitHub
-
-Argo CD GitOps
+🚀 Argo CD Docs
 
