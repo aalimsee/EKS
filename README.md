@@ -1,13 +1,12 @@
 # EKS
 Understanding EKS
 
-🧠 Understanding Your AWS EKS Cluster Setup
+# 🧠 Understanding Your AWS EKS Cluster Setup
+
 This guide provides essential kubectl, aws, and eksctl commands to help you inspect and understand the configuration of your Amazon EKS cluster.
 
 📌 1. Cluster Overview
 bash
-Copy
-Edit
 kubectl cluster-info
 kubectl version --short
 kubectl get nodes -o wide
