@@ -5,14 +5,15 @@ Understanding EKS
 
 This guide provides essential kubectl, aws, and eksctl commands to help you inspect and understand the configuration of your Amazon EKS cluster.
 
-📌 1. Cluster Overview
-bash
+# 📌 1. Cluster Overview
+
+```bash
 kubectl cluster-info
 kubectl version --short
-kubectl get nodes -o wide
-View API server details
+kubectl get nodes -o wide```
 
-Confirm node health, versions, and AZ placement
+- View API server details
+- Confirm node health, versions, and AZ placement
 
 📌 2. List Namespaces and All Resources
 bash
